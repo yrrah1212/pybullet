@@ -2,6 +2,18 @@ import pybullet as p
 import time
 import pybullet_data
 import numpy as np
+from forward_k import *
+
+
+def set_arm_state(th_list):
+    th_list[1] += np.pi/2
+    for i in range(6):
+        p.resetJointState(arm, i, th_list[i])
+
+def get_arm_state():
+    all_joints = [i[0] for i in p.getJointStates(arm, range(6))]
+    all_joints[1] -= np.pi/2
+    return all_joints
 
 physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
 
@@ -10,10 +22,12 @@ p.setGravity(0,0,-10)
 
 planeId = p.loadURDF("plane.urdf")
 
-startPos = [0,0,0]
 startOrientation = p.getQuaternionFromEuler([0,0,0])
 f_path = "abb_irb120_support/urdf/irb120_3_58_macro.xacro"
-arm = p.loadURDF(f_path, [0,0,0], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
+arm = p.loadURDF(f_path, [0,0,.25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
+
+set_arm_state(np.zeros((1,6))[0])
+p.stepSimulation()
 
 while True:
     command = input("Command: ")
@@ -27,49 +41,22 @@ while True:
     else:
         joint = int(command[0])
         value = float(command[2:])
-        p.setJointMotorControl2(arm, joint, p.POSITION_CONTROL, value)
-        joint_state = p.getJointState(arm, joint)
+        all_joints = get_arm_state()
+        all_joints[joint] = value
+        set_arm_state(all_joints)
+        p.stepSimulation()
 
-        cp = None
+        cp = p.getContactPoints()
+        if len(cp) > 0:
+            print(cp)
 
-        while np.abs(value - joint_state[0]) > .001:
-            p.stepSimulation()
-            time.sleep(1./240.)
+        all_joints = [i[0] for i in p.getJointStates(arm, range(6))]
+        H = dh_fwdK(all_joints)
+        print(f"The joint values:\n {all_joints}\n result in the transform:\n {np.round(H, 3)}")
 
-            # Contact Points do not get reset after resetting the joint?
-            cp = p.getContactPoints()
-            if len(cp) > 0:
-                for c in cp:
-                    print(f"Link {c[3]} hit Link {c[4]}")
-                for i in range(6):
-                    p.resetJointState(arm, i, 0)
-                break
-
-            joint_state = p.getJointState(arm, joint)
-
-            
-
-# Move all joints
-# for y in range(2):
-#     for x in range(6):
-#         time.sleep(1)
-#         positions = np.zeros((1,9))[0]
-#         positions[x] = 1
-#         p.setJointMotorControlArray(arm, range(9), p.POSITION_CONTROL, positions)
-
-#         j_states = p.getJointStates(arm, range(6))
-#         thetas = [i[0] for i in j_states]
-
-#         while np.abs(1 - thetas[x]) > .001:
-#             p.stepSimulation()
-#             time.sleep(1./240.)
-#             j_states = p.getJointStates(arm, range(6))
-#             thetas = [i[0] for i in j_states]
-#             # print(np.round(thetas, 3))
-#         time.sleep(1)
-#         p.resetJointState(arm, x, 0)
-#         p.stepSimulation()
         
 
 p.disconnect()
+
+
 
