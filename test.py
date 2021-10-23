@@ -4,12 +4,13 @@ import pybullet_data
 import numpy as np
 from forward_k import *
 
-
+# Set the joint values taking into account the offset
 def set_arm_state(th_list):
     th_list[1] += np.pi/2
     for i in range(6):
         p.resetJointState(arm, i, th_list[i])
 
+# Get the current joint values taking into account the offset
 def get_arm_state():
     all_joints = [i[0] for i in p.getJointStates(arm, range(6))]
     all_joints[1] -= np.pi/2
@@ -48,13 +49,11 @@ while True:
 
         cp = p.getContactPoints()
         if len(cp) > 0:
-            print(cp)
+            print("There were collisions")
 
         all_joints = [i[0] for i in p.getJointStates(arm, range(6))]
         H = dh_fwdK(all_joints)
-        print(f"The joint values:\n {all_joints}\n result in the transform:\n {np.round(H, 3)}")
-
-        
+        print(f"The joint values:\n {all_joints}\n result in the transform:\n {np.round(H, 3)}")  
 
 p.disconnect()
 

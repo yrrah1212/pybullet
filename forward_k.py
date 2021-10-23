@@ -25,7 +25,7 @@ def dhTransform(a: float, d: float, alpha: float, theta: float):
 
 def dh_fwdK(th_list: list):
     pi = np.pi
-    dh_table = np.array([
+    dh = np.array([
                         [0,     .29,    -1*pi/2,    0],
                         [.270,  0,      0,          pi/2],
                         [.07,   0,      -1*pi/2,    0],
@@ -35,10 +35,6 @@ def dh_fwdK(th_list: list):
 
     H = np.eye(4)
     for i in range(6):
-        a = dh_table[i][0]
-        d = dh_table[i][1]
-        alpha = dh_table[i][2]
-        theta = th_list[i] - dh_table[i][3]
-        H = H @ dhTransform(a, d, alpha, theta)
+        H = H @ dhTransform(dh[i][0], dh[i][1], dh[i][2], th_list[i] - dh[i][3])
         
     return H
