@@ -19,12 +19,12 @@ def get_arm_state():
 physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
-p.setGravity(0,0,-10)
+p.setGravity(0,0,-9.8)
 
 planeId = p.loadURDF("plane.urdf")
 
 startOrientation = p.getQuaternionFromEuler([0,0,0])
-f_path = "abb_irb120_support/urdf/irb120_3_58_macro.xacro"
+f_path = "irb120.urdf"
 arm = p.loadURDF(f_path, [0,0,.25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
 
 set_arm_state(np.zeros((1,6))[0])
