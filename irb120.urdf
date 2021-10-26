@@ -12,14 +12,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/base_link.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/base_link.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_1">
@@ -33,14 +31,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_1.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_1.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_2">
@@ -54,14 +50,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_2.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_2.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_3">
@@ -75,14 +69,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_3.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_3.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_4">
@@ -96,14 +88,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_4.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_4.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_5">
@@ -117,14 +107,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_5.stl"/>
         </geometry>
-        <xacro:material_abb_orange />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_5.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <link name="link_6">
@@ -138,14 +126,12 @@
         <geometry>
           <mesh filename="./meshes/irb120_3_58/visual/link_6.stl"/>
         </geometry>
-        <xacro:material_abb_black />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="./meshes/irb120_3_58/collision/link_6.stl"/>
         </geometry>
-        <xacro:material_abb_yellow />
       </collision>
     </link>
     <!-- end of link list -->
@@ -202,7 +188,13 @@
     <!-- end of joint list -->
 
     <!-- ROS-Industrial 'base' frame: base_link to ABB World Coordinates transform -->
-    <link name="base" />
+    <link name="base">
+      <inertial>
+        <mass value="6.215"/>
+        <origin xyz="-0.04204 8.01E-05 0.07964" rpy="0 0 0"/>
+        <inertia ixx="0.0247272" ixy="-8.0784E-05" ixz="0.00130902" iyy="0.0491285" iyz="-8.0419E-06" izz="0.0472376"/>
+      </inertial>
+    </link>
     <joint name="base_link-base" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="base_link"/>
@@ -210,18 +202,18 @@
     </joint>
 
     <!-- ROS-Industrial 'flange' frame: attachment point for EEF models -->
-    <link name="flange"/>
+    <!-- <link name="flange"/>
     <joint type="fixed" name="joint_6-flange">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_6"/>
       <child link="flange"/>
-    </joint>
+    </joint> -->
 
     <!-- ROS-Industrial 'tool0' frame: all-zeros tool frame -->
-    <link name="tool0" />
+    <!-- <link name="tool0" />
     <joint name="link_6-tool0" type="fixed">
       <origin xyz="0 0 0" rpy="0 1.570796 0" />
       <parent link="flange" />
       <child link="tool0" />
-    </joint>
+    </joint> -->
 </robot>

@@ -1,8 +1,11 @@
 import gym
+
 import numpy as np
 from numpy.random import default_rng
+
 import pybullet as p
 import pybullet_data
+
 from irb120_env.resources.arm import Arm
 
 class IRB120ENV(gym.Env):
