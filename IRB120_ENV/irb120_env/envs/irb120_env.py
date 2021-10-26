@@ -12,7 +12,7 @@ class IRB120ENV(gym.Env):
         self.action_space = gym.spaces.box.Box(
             # Action space bounded by joint limits
             low=np.array([-2.87979, -1.91986, -1.91986, -2.79253, -2.094395, -6.98132]),
-            high=np.array([2.87979, 1.91986, 1.22173, 2.79253, 2.094395, -6.98132])
+            high=np.array([2.87979, 1.91986, 1.22173, 2.79253, 2.094395, 6.98132])
         )
 
         self.observation_space = gym.spaces.box.Box(
