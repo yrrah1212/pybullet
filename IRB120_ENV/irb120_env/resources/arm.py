@@ -6,7 +6,6 @@ class Arm:
     def __init__(self):
         startOrientation = p.getQuaternionFromEuler([0,0,0])
         f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
-        print(f_path)
         self.arm = p.loadURDF(f_path, [0, 0, .25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
 
     def apply_action(self, th_list):
