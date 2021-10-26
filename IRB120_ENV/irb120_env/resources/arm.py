@@ -5,7 +5,10 @@ import pathlib
 class Arm:
     def __init__(self):
         startOrientation = p.getQuaternionFromEuler([0,0,0])
-        f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
+        # Path not in colab
+        # f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
+        # Path in colab
+        f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"
         self.arm = p.loadURDF(f_path, [0, 0, .25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
 
     def apply_action(self, th_list):
