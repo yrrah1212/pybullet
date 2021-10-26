@@ -1,8 +1,9 @@
 import gym
 import numpy as np
+from numpy.random import default_rng
 import pybullet as p
 import pybullet_data
-from irb120_env.resources import Arm
+from irb120_env.resources.arm import Arm
 
 class IRB120ENV(gym.Env):
     metadata = {'render.modes': ['human']}  
@@ -17,7 +18,7 @@ class IRB120ENV(gym.Env):
         self.observation_space = gym.spaces.box.Box(
             # Position and orientation of end effector. x, y, z, quaternion values
             low=np.array([-5, -5, -5, -1, -1, -1, -1]),
-            high=np.array([5, 5, 5, 5, 1, 1, 1, 1])
+            high=np.array([5, 5, 5, 1, 1, 1, 1])
         )
         self.seed()
 
@@ -44,16 +45,26 @@ class IRB120ENV(gym.Env):
         # Get observation about the arm now
         arm_state = self.arm.get_observations()
 
-        # TODO calculate the new error. Probably L2 distance between end effector and destination 
-        #       but could also incorporate rotation error
+        # Calculate the new error. L2 distance between goal vectors
+        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
 
-        # TODO calculate reward
 
-        # TODO update previous error
+        # Reward. Difference between previous error and current error
+        # TODO set negative reward for collisions? Not sure if that will happen
+        #   since the control space is bounded in the environment
+        reward = max(self.prev_error - error, 0)
 
-        # TODO check if the process is done
+        # Update previous error
+        self.prev_error = error
+
+        # Check if the process is done
+        # TODO check for other done cases: collisions
+        # TODO set a large reward for getting to the correct position and orientation
+        if error < .001:
+            self.done = True
 
         # TODO return the observation, reward, and done state
+        return arm_state, reward, self.done, dict()
 
     def reset(self):
         p.resetSimulation()
@@ -61,11 +72,22 @@ class IRB120ENV(gym.Env):
 
         self.arm = Arm()
 
-        # TODO generate a goal position and orientation for the arm
+        # Generate a goal position and orientation for the arm
+        goal_d = default_rng().random(3)
+        goal_q = 2*default_rng().random(4)-1
+        goal_q /= np.linalg.norm(goal_q)
 
-        # TODO get observation for the current arm state
+        self.goal = np.concatenate([goal_d, goal_q])
 
-        # TODO return current observation
+        # Get observation for the current arm state
+        arm_state = self.arm.get_observations()
+
+        # Set the first prev_error based on the starting error
+        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
+        self.prev_error = error
+
+        # TODO the example returns the state and the goal
+        return arm_state
 
     def render(self):
         pass

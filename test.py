@@ -3,6 +3,7 @@ import time
 import pybullet_data
 import numpy as np
 from forward_k import *
+import pathlib
 
 # Set the joint values taking into account the offset
 def set_arm_state(th_list):
@@ -24,7 +25,7 @@ p.setGravity(0,0,-9.8)
 planeId = p.loadURDF("plane.urdf")
 
 startOrientation = p.getQuaternionFromEuler([0,0,0])
-f_path = "irb120.urdf"
+f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
 arm = p.loadURDF(f_path, [0,0,.25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
 
 set_arm_state(np.zeros((1,6))[0])

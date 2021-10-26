@@ -1,11 +1,12 @@
 import pybullet as p
 import numpy as np
+import pathlib
 
 class Arm:
     def __init__(self):
-        f_path = "abb_irb120_support/urdf/irb120.urdf"
         startOrientation = p.getQuaternionFromEuler([0,0,0])
-        self.arm = p.loadURDF(f_path, [0, 0, .25], [startOrientation], useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
+        f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
+        self.arm = p.loadURDF(f_path, [0, 0, .25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
 
     def apply_action(self, th_list):
         th_list[1] += np.pi/2
@@ -38,9 +39,9 @@ def rotZ(theta: float):
     return r
 
 def rot2Quat(r):
-    r11 = r[1][1]
-    r22 = r[2][2]
-    r33 = r[3][3]
+    r11 = r[0,0]
+    r22 = r[1,1]
+    r33 = r[2,2]
     
     q0s = .25 * (1 + r11 + r22 + r33)
     q1s = .25 * (1 + r11 - r22 - r33)
@@ -54,28 +55,28 @@ def rot2Quat(r):
     if max_idx == 0:
         q0 = np.sqrt(q0s)
         
-        q1 = .25*(r[3][2] - r[2][3]) / q0
-        q2 = .25*(r[1][3] - r[3][1]) / q0
-        q3 = .25*(r[2][1] - r[1][2]) / q0
+        q1 = .25*(r[2][1] - r[1][2]) / q0
+        q2 = .25*(r[0][2] - r[2][0]) / q0
+        q3 = .25*(r[1][0] - r[0][1]) / q0
     elif max_idx == 1:
         q1 = np.sqrt(q1s)
         
-        q0 = .25*(r[3][2] - r[2][3]) / q1
-        q1 = .25*(r[1][2] + r[2][1]) / q1
-        q3 = .25*(r[1][3] + r[3][1]) / q1
+        q0 = .25*(r[2][1] - r[1][2]) / q1
+        q2 = .25*(r[0][1] + r[1][0]) / q1
+        q3 = .25*(r[0][2] + r[2][0]) / q1
     elif max_idx == 2:
         q2 = np.sqrt(q2s)
         
-        q0 = .25*(r[1][3] - r[3][1]) / q2
-        q1 = .25*(r[1][2] + r[2][1]) / q2
-        q3 = .25*(r[2][3] + r[3][2]) / q2
+        q0 = .25*(r[0][2] - r[2][0]) / q2
+        q1 = .25*(r[0][1] + r[1][0]) / q2
+        q3 = .25*(r[1][2] + r[2][1]) / q2
     
     elif max_idx == 3:
         q3 = np.sqrt(q3s)
         
-        q0 = .25*(r[2][1] - r[1][2]) / q3
-        q1 = .25*(r[1][3] + r[3][1]) / q3
-        q2 = .25*(r[2][3] + r[3][2]) / q3
+        q0 = .25*(r[1][0] - r[0][1]) / q3
+        q1 = .25*(r[0][2] + r[2][0]) / q3
+        q2 = .25*(r[1][2] + r[2][1]) / q3
 
     return [q0, q1, q2, q3]
 
