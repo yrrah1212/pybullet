@@ -1,1 +1,10 @@
 */__pycache__/
+__pycache__/forward_k.cpython-38.pyc
+IRB120_ENV/irb120_env/__pycache__/__init__.cpython-38.pyc
+IRB120_ENV/irb120_env/envs/__pycache__/__init__.cpython-38.pyc
+
+IRB120_ENV/irb120_env/envs/__pycache__/irb120_env.cpython-38.pyc
+IRB120_ENV/irb120_env/resources/__pycache__/__init__.cpython-38.pyc
+IRB120_ENV/irb120_env/resources/__pycache__/arm.cpython-38.pyc
+test.py
+q_learning.py
