@@ -66,7 +66,7 @@ class IRB120ENV(gym.Env):
         if error < .001:
             self.done = True
 
-        # TODO return the observation, reward, and done state
+        # Return the observation, reward, and done state
         return arm_state, reward, self.done, dict()
 
 
