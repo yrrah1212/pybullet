@@ -92,7 +92,7 @@ class IRB120ENV(gym.Env):
         return arm_state
 
     def render(self):
-        cam_pos = [1,1,1]
+        cam_pos = [1,1,1.5]
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
 
@@ -110,7 +110,7 @@ class IRB120ENV(gym.Env):
         rgb = img_array[2]
         np_img = np.reshape(rgb, (h,w,4))
         np_img = np_img * (1./255.)
-        return np_img, img_array
+        return np_img
 
 
     def close(self):
