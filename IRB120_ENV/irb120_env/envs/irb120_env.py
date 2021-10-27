@@ -8,6 +8,8 @@ import pybullet_data
 
 from irb120_env.resources.arm import Arm
 
+from matplotlib import pylab
+
 class IRB120ENV(gym.Env):
     metadata = {'render.modes': ['human']}  
   
@@ -93,7 +95,27 @@ class IRB120ENV(gym.Env):
         return arm_state
 
     def render(self):
-        pass
+        cam_pos = [2,2,2]
+        target_pos = [0,0,.25]
+        up_vector = [0,0,1]
+
+        fov = 60
+        img_width = 640
+        img_height = 480
+        aspect = img_width / img_height
+
+        view_matrix = p.computeViewMatrix(cam_pos, target_pos, up_vector)
+        projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, .01, 100)
+
+        img_array = p.getCameraImage(img_width, img_height, view_matrix, projection_matrix)
+        w = img_array[0]
+        h = img_array[1]
+        rgb = img_array[2]
+        dep = img_array[3]
+        np_img = np.reshape(rgb, (h,w,4))
+        np_img = np_img * (1./255.)
+        pylab.imshow(np_img, interpolation='none', animated=True, label='Pybullet Image')
+
 
     def close(self):
         p.disconnect()   
