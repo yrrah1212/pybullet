@@ -25,15 +25,14 @@ class IRB120ENV(gym.Env):
         )
         self.seed()
 
+        # Connect to the pybullet sim
         self.sim = p.connect(p.DIRECT)
-        p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
         p.setGravity(0,0,-9.8)
 
         self.arm = None
         self.goal = None
         self.done = None
         self.prev_error = None
-        self.visualize = False
 
         self.camPose = cam_pos
 
@@ -97,26 +96,32 @@ class IRB120ENV(gym.Env):
 
 
     def render(self, mode=None, args=None):
+        # Location of the target (the base of the arm)
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
 
+        # Parameters for the rendered image
         fov = 60
         img_width = 640
         img_height = 480
         aspect = img_width / img_height
 
+        # View and projection matrices from pybullet
         view_matrix = p.computeViewMatrix(self.cam_pos, target_pos, up_vector)
         projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, .01, 100)
 
+        # The image from pybullet
         img_array = p.getCameraImage(img_width, img_height, view_matrix, projection_matrix)
         w = img_array[0]
         h = img_array[1]
         rgb = img_array[2]
+        # Convert the image
         np_img = np.reshape(rgb, (h,w,4))
         np_img = np_img * (1./255.)
         return np_img
 
 
+    # Set the pose of the camera for rendering
     def set_cam_pose(self, cam_pos):
         self.cam_pos = cam_pos
 
