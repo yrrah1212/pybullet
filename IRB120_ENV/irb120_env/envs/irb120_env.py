@@ -28,7 +28,6 @@ class IRB120ENV(gym.Env):
         self.sim = p.connect(p.DIRECT)
         p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
         p.setGravity(0,0,-9.8)
-        planeId = p.loadURDF("plane.urdf")
 
         self.arm = None
         self.goal = None
@@ -93,7 +92,7 @@ class IRB120ENV(gym.Env):
         return arm_state
 
     def render(self):
-        cam_pos = [2,2,2]
+        cam_pos = [1,1,1]
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
 
@@ -109,7 +108,6 @@ class IRB120ENV(gym.Env):
         w = img_array[0]
         h = img_array[1]
         rgb = img_array[2]
-        dep = img_array[3]
         np_img = np.reshape(rgb, (h,w,4))
         np_img = np_img * (1./255.)
         return np_img
