@@ -5,7 +5,7 @@ import pathlib
 class Arm:
     def __init__(self):
         startOrientation = p.getQuaternionFromEuler([0,0,0])
-        # Path no in colab
+        # Path not in colab
         # f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
         # Path in colab
         f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"

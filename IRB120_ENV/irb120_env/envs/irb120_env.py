@@ -8,8 +8,6 @@ import pybullet_data
 
 from irb120_env.resources.arm import Arm
 
-from matplotlib import pylab
-
 class IRB120ENV(gym.Env):
     metadata = {'render.modes': ['human']}  
   
@@ -114,7 +112,7 @@ class IRB120ENV(gym.Env):
         dep = img_array[3]
         np_img = np.reshape(rgb, (h,w,4))
         np_img = np_img * (1./255.)
-        pylab.imshow(np_img, interpolation='none', animated=True, label='Pybullet Image')
+        return np_img
 
 
     def close(self):
