@@ -91,7 +91,7 @@ class IRB120ENV(gym.Env):
         # TODO the example returns the state and the goal
         return arm_state
 
-    def render(self):
+    def render(self, mode=None, args=None):
         cam_pos = [1,1,1.5]
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
