@@ -11,7 +11,7 @@ from irb120_env.resources.arm import Arm
 class IRB120ENV(gym.Env):
     metadata = {'render.modes': ['human']}  
   
-    def __init__(self):
+    def __init__(self, cam_pos=[1,1,1.5]):
         self.action_space = gym.spaces.box.Box(
             # Action space bounded by joint limits
             low=np.array([-2.87979, -1.91986, -1.91986, -2.79253, -2.094395, -6.98132]),
@@ -34,6 +34,8 @@ class IRB120ENV(gym.Env):
         self.done = None
         self.prev_error = None
         self.visualize = False
+
+        self.camPose = cam_pos
 
         self.reset()
 
@@ -68,6 +70,7 @@ class IRB120ENV(gym.Env):
         # TODO return the observation, reward, and done state
         return arm_state, reward, self.done, dict()
 
+
     def reset(self):
         p.resetSimulation()
         p.setGravity(0,0,-9.8)
@@ -91,8 +94,8 @@ class IRB120ENV(gym.Env):
         # TODO the example returns the state and the goal
         return arm_state
 
+
     def render(self, mode=None, args=None):
-        cam_pos = [1,1,1.5]
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
 
@@ -101,7 +104,7 @@ class IRB120ENV(gym.Env):
         img_height = 480
         aspect = img_width / img_height
 
-        view_matrix = p.computeViewMatrix(cam_pos, target_pos, up_vector)
+        view_matrix = p.computeViewMatrix(self.cam_pos, target_pos, up_vector)
         projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, .01, 100)
 
         img_array = p.getCameraImage(img_width, img_height, view_matrix, projection_matrix)
@@ -113,9 +116,14 @@ class IRB120ENV(gym.Env):
         return np_img
 
 
+    def set_cam_pose(self, cam_pos):
+        self.cam_pos = cam_pos
+
+
     def close(self):
         p.disconnect()   
     
+
     def seed(self, seed=None): 
         self.np_random, seed = gym.utils.seeding.np_random(seed)
         return [seed]
