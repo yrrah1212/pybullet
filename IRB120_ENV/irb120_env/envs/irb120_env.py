@@ -27,6 +27,10 @@ class IRB120ENV(gym.Env):
 
         # Connect to the pybullet sim
         self.sim = p.connect(p.DIRECT)
+
+        p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        world_plane = p.loadURDF("plane.urdf")
+
         p.setGravity(0,0,-9.8)
 
         self.arm = None
@@ -83,6 +87,13 @@ class IRB120ENV(gym.Env):
         goal_q /= np.linalg.norm(goal_q)
 
         self.goal = np.concatenate([goal_d, goal_q])
+
+        # Add goal position to the sim. Sphere with radius=.1
+        goal_collision = p.createCollisionShape(p.GEOM_SPHERE, .05)
+        goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
+        p.createMultiBody(baseCollisionShapeIndex=goal_collision, 
+                            baseVisualShapeIndex=goal_visual,
+                            basePosition=goal_d)
 
         # Get observation for the current arm state
         arm_state = self.arm.get_observations()
