@@ -89,7 +89,7 @@ class IRB120ENV(gym.Env):
         x = (default_rng().random() * 2 * x_max) - x_max
         y_max = np.sqrt(x_max - x**2)
         y = (default_rng().random() * 2 * y_max) - y_max
-        z_max = np.sqrt(.6**2 - x**2 - y**2)
+        z_max = np.sqrt(.8**2 - x**2 - y**2)
         z = (default_rng().random() * 2 * z_max) - z_max
         goal_d = [x, y, z]
 
