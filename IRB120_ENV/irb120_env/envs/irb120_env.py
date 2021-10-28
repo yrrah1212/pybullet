@@ -26,7 +26,7 @@ class IRB120ENV(gym.Env):
         self.seed()
 
         # Connect to the pybullet sim
-        self.sim = p.connect(p.DIRECT)
+        self.sim = p.connect(p.DIRECT, options='--background_color_red=1.0')
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.world_plane = p.loadURDF("plane.urdf")
