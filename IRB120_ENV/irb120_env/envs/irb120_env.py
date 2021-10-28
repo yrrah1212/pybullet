@@ -53,21 +53,23 @@ class IRB120ENV(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
+        error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(7)]))
 
-
-        # Reward. Difference between previous error and current error
-        # TODO set negative reward for collisions? Not sure if that will happen
-        #   since the control space is bounded in the environment
-        reward = max(self.prev_error - error, 0)
+        # Reward. Difference between previous error and current error if there were no collisions
+        collisions = p.getContactPoints()
+        if len(collisions) > 0:
+            reward = -100
+            self.done = True
+        else:
+            reward = max(self.prev_error - error, 0)
 
         # Update previous error
         self.prev_error = error
 
         # Check if the process is done
-        # TODO check for other done cases: collisions
-        # TODO set a large reward for getting to the correct position and orientation
+        # TODO determine if this reward is appropriate for solving the problem
         if error < .001:
+            reward = 100
             self.done = True
 
         # Return the observation, reward, and done state
@@ -75,6 +77,8 @@ class IRB120ENV(gym.Env):
 
 
     def reset(self):
+        self.done = False
+
         p.resetSimulation()
         self.world_plane = p.loadURDF("plane.urdf")
         p.setGravity(0,0,-9.8)
@@ -84,7 +88,6 @@ class IRB120ENV(gym.Env):
         # Generate a goal position and orientation for the arm
         # Limits based on arm contraints
         # https://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data
-        # TODO make sure this math is correct
         x_max = .4
         x = (default_rng().random() * 2 * x_max) - x_max
         y_max = np.sqrt(x_max - x**2)
