@@ -86,11 +86,11 @@ class IRB120ENV(gym.Env):
         # https://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data
         # TODO make sure this math is correct
         x_max = .5
-        x = (default_rng.random() * 2 * x_max) - x_max
+        x = (default_rng() * 2 * x_max) - x_max
         y_max = np.sqrt(.5 - x**2)
-        y = (default_rng.random() * 2 * y_max) - y_max
+        y = (default_rng() * 2 * y_max) - y_max
         z_max = np.sqrt(.8**2 - x**2 - y**2)
-        z = (default_rng.random() * 2 * z_max) - z_max
+        z = (default_rng() * 2 * z_max) - z_max
         goal_d = [x, y, z]
 
         goal_q = 2*default_rng().random(4)-1
