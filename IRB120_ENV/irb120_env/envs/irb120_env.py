@@ -26,7 +26,7 @@ class IRB120ENV(gym.Env):
         self.seed()
 
         # Connect to the pybullet sim
-        self.sim = p.connect(p.DIRECT, options='--background_color_red=1.0')
+        self.sim = p.connect(p.DIRECT)
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.world_plane = p.loadURDF("plane.urdf")
@@ -84,6 +84,7 @@ class IRB120ENV(gym.Env):
         # Generate a goal position and orientation for the arm
         # Limits based on arm contraints
         # https://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data
+        # TODO make sure this math is correct
         x_max = .5
         x = (default_rng.random() * 2 * x_max) - x_max
         y_max = np.sqrt(.5 - x**2)
