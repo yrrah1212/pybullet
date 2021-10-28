@@ -84,11 +84,11 @@ class IRB120ENV(gym.Env):
         # Generate a goal position and orientation for the arm
         # Limits based on arm contraints
         # https://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data
-        x_max = .58
+        x_max = .5
         x = (default_rng.random() * 2 * x_max) - x_max
-        y_max = np.sqrt(.58 - x^2)
+        y_max = np.sqrt(.5 - x**2)
         y = (default_rng.random() * 2 * y_max) - y_max
-        z_max = np.sqrt(.87**2 - x**2 - y**2)
+        z_max = np.sqrt(.8**2 - x**2 - y**2)
         z = (default_rng.random() * 2 * z_max) - z_max
         goal_d = [x, y, z]
 
