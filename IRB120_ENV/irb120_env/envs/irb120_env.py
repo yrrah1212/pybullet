@@ -29,7 +29,7 @@ class IRB120ENV(gym.Env):
         self.sim = p.connect(p.DIRECT)
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        world_plane = p.loadURDF("plane.urdf")
+        self.world_plane = p.loadURDF("plane.urdf")
 
         p.setGravity(0,0,-9.8)
 
@@ -76,6 +76,7 @@ class IRB120ENV(gym.Env):
 
     def reset(self):
         p.resetSimulation()
+        self.world_plane = p.loadURDF("plane.urdf")
         p.setGravity(0,0,-9.8)
 
         self.arm = Arm()
@@ -90,7 +91,7 @@ class IRB120ENV(gym.Env):
         z_max = np.sqrt(.87**2 - x**2 - y**2)
         z = (default_rng.random() * 2 * z_max) - z_max
         goal_d = [x, y, z]
-        
+
         goal_q = 2*default_rng().random(4)-1
         goal_q /= np.linalg.norm(goal_q)
 
