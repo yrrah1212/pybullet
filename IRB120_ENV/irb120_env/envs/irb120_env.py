@@ -82,7 +82,7 @@ class IRB120ENV(gym.Env):
 
         # Generate a goal position and orientation for the arm
         # TODO add the goal to the environment so it can be visualized in render()
-        goal_d = (default_rng().random(3)-.5) / 2
+        goal_d = [default_rng.random()-.5, default_rng.random()-.5, default_rng.random()]
         goal_q = 2*default_rng().random(4)-1
         goal_q /= np.linalg.norm(goal_q)
 
