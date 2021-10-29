@@ -37,6 +37,7 @@ class IRB120ENV(gym.Env):
         self.goal = None
         self.done = None
         self.prev_error = None
+        self.step_counter = 0
 
         self.reset()
 
@@ -64,6 +65,13 @@ class IRB120ENV(gym.Env):
         # Update previous error
         self.prev_error = error
 
+        # Increase the step counter
+        self.step_counter += 1
+
+        # If the step counter goes over this many steps then stop
+        if self.step_counter > 1000:
+            self.done = True
+
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error < .001:
@@ -76,6 +84,7 @@ class IRB120ENV(gym.Env):
 
     def reset(self):
         self.done = False
+        self.step_counter = 0
 
         p.resetSimulation()
         self.world_plane = p.loadURDF("plane.urdf")
