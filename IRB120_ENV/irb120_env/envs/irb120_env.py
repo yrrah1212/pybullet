@@ -140,7 +140,7 @@ class IRB120ENV(gym.Env):
         rgb = img_array[2]
         # Convert the image
         np_img = np.reshape(rgb, (h,w,4))
-        np_img = np_img * (1./255.)
+        # np_img = np_img * (1./255.)
         return np_img
 
 
