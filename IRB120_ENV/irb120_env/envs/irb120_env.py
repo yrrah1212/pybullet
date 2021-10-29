@@ -11,7 +11,7 @@ from irb120_env.resources.arm import Arm
 class IRB120ENV(gym.Env):
     metadata = {'render.modes': ['human']}  
   
-    def __init__(self, cam_pos=[1,1,1.5]):
+    def __init__(self):
         self.action_space = gym.spaces.box.Box(
             # Action space bounded by joint limits
             low=np.array([-2.87979, -1.91986, -1.91986, -2.79253, -2.094395, -6.98132]),
@@ -37,8 +37,6 @@ class IRB120ENV(gym.Env):
         self.goal = None
         self.done = None
         self.prev_error = None
-
-        self.camPose = cam_pos
 
         self.reset()
 
@@ -121,6 +119,7 @@ class IRB120ENV(gym.Env):
 
     def render(self, mode=None, args=None):
         # Location of the target (the base of the arm)
+        cam_pos = [1,-1,1.5]
         target_pos = [0,0,.25]
         up_vector = [0,0,1]
 
@@ -131,7 +130,7 @@ class IRB120ENV(gym.Env):
         aspect = img_width / img_height
 
         # View and projection matrices from pybullet
-        view_matrix = p.computeViewMatrix(self.cam_pos, target_pos, up_vector)
+        view_matrix = p.computeViewMatrix(cam_pos, target_pos, up_vector)
         projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, .01, 100)
 
         # The image from pybullet
