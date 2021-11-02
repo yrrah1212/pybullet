@@ -14,8 +14,8 @@ class IRB120ENV(gym.Env):
     def __init__(self):
         self.action_space = gym.spaces.box.Box(
             # Action space for theta 1
-            low=np.array([-2.87979]),
-            high=np.array([2.87979])
+            low=-2.87979,
+            high=2.87979
         )
 
         self.observation_space = gym.spaces.box.Box(
@@ -106,7 +106,12 @@ class IRB120ENV(gym.Env):
         # goal_q = 2*default_rng().random(4)-1
         # goal_q /= np.linalg.norm(goal_q)
 
-        goal_d = [.5, .5, .5]
+        mag = .34
+        x = .2
+        y = np.sqrt(mag**2 - x**2)
+        z = -.084 + .25
+
+        goal_d = [x,y,z]
 
         self.goal = goal_d
 

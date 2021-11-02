@@ -10,6 +10,8 @@ class Arm:
         # Path in colab
         f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"
         self.arm = p.loadURDF(f_path, [0, 0, .25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
+        # start in the zero angle config
+        self.apply_action([0,0,0,0,0,0])
 
     def apply_action(self, th_list):
         th_list[1] += np.pi/2
