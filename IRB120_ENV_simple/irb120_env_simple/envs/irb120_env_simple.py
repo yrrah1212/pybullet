@@ -108,7 +108,7 @@ class IRB120ENV_simple(gym.Env):
         # goal_q /= np.linalg.norm(goal_q)
 
         x = 0
-        y = .34
+        y = -.34
         z = -.084 + .25
         goal_d = [x,y,z]
 
@@ -116,7 +116,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_collision = p.createCollisionShape(p.GEOM_SPHERE, .05)
-        goal_visual = p.createVisualShape(p.GEOM_SPHERE, .5, rgbaColor=[0,1,0,1])
+        goal_visual = p.createVisualShape(p.GEOM_SPHERE, .1, rgbaColor=[0,1,0,1])
         p.createMultiBody(baseCollisionShapeIndex=goal_collision, 
                             baseVisualShapeIndex=goal_visual,
                             basePosition=goal_d)
@@ -140,8 +140,8 @@ class IRB120ENV_simple(gym.Env):
 
         # Parameters for the rendered image
         fov = 60
-        img_width = 640
-        img_height = 480
+        img_width = 1280
+        img_height = 960
         aspect = img_width / img_height
 
         # View and projection matrices from pybullet
