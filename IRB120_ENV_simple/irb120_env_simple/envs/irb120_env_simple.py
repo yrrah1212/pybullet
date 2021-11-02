@@ -53,7 +53,7 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(3)]))
+        error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(2)]))
 
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
@@ -127,7 +127,7 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(3)]))
+        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(2)]))
         self.prev_error = error
 
         # TODO the example returns the state and the goal
