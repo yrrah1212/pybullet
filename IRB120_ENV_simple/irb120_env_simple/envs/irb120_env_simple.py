@@ -108,7 +108,7 @@ class IRB120ENV_simple(gym.Env):
         # goal_q /= np.linalg.norm(goal_q)
 
         mag = .34
-        x = .2
+        x = -.2
         y = np.sqrt(mag**2 - x**2)
         z = -.084 + .25
 
