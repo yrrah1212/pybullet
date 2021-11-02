@@ -7,7 +7,7 @@ from numpy.random import default_rng
 import pybullet as p
 import pybullet_data
 
-from irb120_env.resources.arm import Arm
+from irb120_env_simple.resources.arm import Arm
 
 class IRB120ENV_simple(gym.Env):
     metadata = {'render.modes': ['human']}  
