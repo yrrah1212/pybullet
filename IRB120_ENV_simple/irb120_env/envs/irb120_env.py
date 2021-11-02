@@ -17,7 +17,7 @@ class IRB120ENV(gym.Env):
             # Action space for theta 1
             low=-2.87979,
             high=2.87979,
-            shape=(1,1)
+            shape=(2,1)
         )
 
         self.observation_space = gym.spaces.box.Box(
