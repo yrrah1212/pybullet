@@ -107,11 +107,9 @@ class IRB120ENV_simple(gym.Env):
         # goal_q = 2*default_rng().random(4)-1
         # goal_q /= np.linalg.norm(goal_q)
 
-        mag = .34
-        x = -.2
-        y = np.sqrt(mag**2 - x**2)
+        x = 0
+        y = .34
         z = -.084 + .25
-
         goal_d = [x,y,z]
 
         self.goal = goal_d
