@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import shape
 import gym
 
 import numpy as np
@@ -15,7 +16,8 @@ class IRB120ENV(gym.Env):
         self.action_space = gym.spaces.box.Box(
             # Action space for theta 1
             low=-2.87979,
-            high=2.87979
+            high=2.87979,
+            shape=(1,1)
         )
 
         self.observation_space = gym.spaces.box.Box(
