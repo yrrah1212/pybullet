@@ -13,7 +13,8 @@ class Arm:
         # start in the zero angle config
         self.apply_action([0,0,0,0,0,0])
 
-    def apply_action(self, th_list):
+    def apply_action(self, th1):
+        th_list = [th1, 0, 0, 0, 0, 0]
         th_list[1] += np.pi/2
         for i in range(6):
             p.resetJointState(self.arm, i, th_list[i])
