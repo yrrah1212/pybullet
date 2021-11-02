@@ -9,7 +9,7 @@ import pybullet_data
 
 from irb120_env.resources.arm import Arm
 
-class IRB120ENV(gym.Env):
+class IRB120ENV_simple(gym.Env):
     metadata = {'render.modes': ['human']}  
   
     def __init__(self):
