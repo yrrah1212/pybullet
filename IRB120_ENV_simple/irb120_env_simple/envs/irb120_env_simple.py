@@ -53,7 +53,8 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(2)]))
+        error = [self.goal[i] - arm_state[i] for i in range(2)]
+        mag_error = np.linalg.norm(error)
 
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
@@ -61,10 +62,10 @@ class IRB120ENV_simple(gym.Env):
             reward = -100
             self.done = True
         else:
-            reward = max(self.prev_error - error, 0)
+            reward = max(self.prev_error - mag_error, 0)
 
         # Update previous error
-        self.prev_error = error
+        self.prev_error = mag_error
 
         # Increase the step counter
         self.step_counter += 1
@@ -95,20 +96,6 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = Arm()
 
-        # Generate a goal position and orientation for the arm
-        # Limits based on arm contraints
-        # https://new.abb.com/products/robotics/industrial-robots/irb-120/irb-120-data
-        # x_max = .4
-        # x = (default_rng().random() * 2 * x_max) - x_max
-        # y_max = np.sqrt(x_max - x**2)
-        # y = (default_rng().random() * 2 * y_max) - y_max
-        # z_max = np.sqrt(.8**2 - x**2 - y**2)
-        # z = (default_rng().random() * 2 * z_max) - z_max
-        # goal_d = [x, y, z]
-
-        # goal_q = 2*default_rng().random(4)-1
-        # goal_q /= np.linalg.norm(goal_q)
-
         x = 0
         y = -.34
         z = -.084 + .25
@@ -127,10 +114,9 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(2)]))
-        self.prev_error = error
-
-        # TODO the example returns the state and the goal
+        error = [arm_state[i] - self.goal[i] for i in range(2)]
+        error_mag = np.linalg.norm(error)
+        self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
         return error
