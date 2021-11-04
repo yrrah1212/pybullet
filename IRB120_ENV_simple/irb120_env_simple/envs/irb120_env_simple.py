@@ -54,7 +54,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Calculate the new error. L2 distance between goal vectors
         error = [self.goal[i] - arm_state[i] for i in range(2)]
-        mag_error = np.linalg.norm(error)
+        error_mag = np.linalg.norm(error)
 
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
@@ -62,10 +62,10 @@ class IRB120ENV_simple(gym.Env):
             reward = -100
             self.done = True
         else:
-            reward = max(self.prev_error - mag_error, 0)
+            reward = max(self.prev_error - error_mag, 0)
 
         # Update previous error
-        self.prev_error = mag_error
+        self.prev_error = error_mag
 
         # Increase the step counter
         self.step_counter += 1
@@ -76,7 +76,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
-        if error < .001:
+        if error_mag < .001:
             reward = 100
             self.done = True
 
