@@ -53,7 +53,7 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = [self.goal[i] - arm_state[i] for i in range(2)]
+        error = self.goal - arm_state
         error_mag = np.linalg.norm(error)
 
         # Reward. Difference between previous error and current error if there were no collisions
@@ -83,7 +83,7 @@ class IRB120ENV_simple(gym.Env):
         # Return the observation, reward, and done state
 
         # Changed the state to be the error so the state is relative to the goal
-        return np.array([error]), reward, self.done, dict()
+        return np.array(error), reward, self.done, dict()
 
 
     def reset(self):
@@ -114,12 +114,12 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = [arm_state[i] - self.goal[i] for i in range(2)]
+        error = self.goal - arm_state
         error_mag = np.linalg.norm(error)
         self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
-        return np.array([error])
+        return np.array(error)
 
 
     def render(self, mode=None, args=None):
