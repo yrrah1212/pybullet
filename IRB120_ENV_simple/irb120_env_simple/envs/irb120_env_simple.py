@@ -83,7 +83,7 @@ class IRB120ENV_simple(gym.Env):
         # Return the observation, reward, and done state
 
         # Changed the state to be the error so the state is relative to the goal
-        return error, reward, self.done, dict()
+        return np.array(error), reward, self.done, dict()
 
 
     def reset(self):
@@ -119,7 +119,7 @@ class IRB120ENV_simple(gym.Env):
         self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
-        return error
+        return np.array(error)
 
 
     def render(self, mode=None, args=None):
