@@ -24,6 +24,7 @@ class IRB120ENV_simple(gym.Env):
             low=np.array([-5, -5, -5]),
             high=np.array([5, 5, 5])
         )
+        
         self.seed()
 
         # Connect to the pybullet sim
@@ -73,14 +74,14 @@ class IRB120ENV_simple(gym.Env):
 
         # If the step counter goes over this many steps then stop
         if self.step_counter > 100:
-            self.done = True
+            # self.done = True
             done_cause = "Finished due to step counter"
 
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error_mag < .001:
             reward = 100
-            self.done = True
+            # self.done = True
             done_cause = "Finished due to reaching final position"
 
         # Return the observation, reward, and done state
