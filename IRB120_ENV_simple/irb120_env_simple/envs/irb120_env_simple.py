@@ -60,7 +60,7 @@ class IRB120ENV_simple(gym.Env):
         collisions = p.getContactPoints()
         if len(collisions) > 0:
             reward = -100
-            self.done = True
+            self.done = 1
         else:
             reward = max(self.prev_error - error_mag, 0)
 
@@ -72,13 +72,13 @@ class IRB120ENV_simple(gym.Env):
 
         # If the step counter goes over this many steps then stop
         if self.step_counter > 100:
-            self.done = True
+            self.done = 2
 
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error_mag < .001:
             reward = 100
-            self.done = True
+            self.done = 3
 
         # Return the observation, reward, and done state
 
