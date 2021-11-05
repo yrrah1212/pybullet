@@ -64,7 +64,7 @@ class IRB120ENV_simple(gym.Env):
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
         if len(collisions) > 0:
-            reward = -50
+            reward = -1
             self.done = True           
 
         # Update previous error
@@ -80,7 +80,7 @@ class IRB120ENV_simple(gym.Env):
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error_mag < .001:
-            reward = 100
+            reward = 10
             self.done = True
 
         # Return the observation, reward, and done state
