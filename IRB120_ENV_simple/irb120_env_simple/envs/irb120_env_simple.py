@@ -57,13 +57,15 @@ class IRB120ENV_simple(gym.Env):
         error = self.goal - arm_state
         error_mag = np.linalg.norm(error)
 
+        # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
+        reward = np.abs(1/error_mag)
+        # reward = 50 * max(self.prev_error - error_mag, 0)
+
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
         if len(collisions) > 0:
             reward = -50
-            self.done = True
-        else:
-            reward = 50 * max(self.prev_error - error_mag, 0)
+            self.done = True           
 
         # Update previous error
         self.prev_error = error_mag
