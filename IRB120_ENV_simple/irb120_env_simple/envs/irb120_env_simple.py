@@ -30,8 +30,8 @@ class IRB120ENV_simple(gym.Env):
         # Connect to the pybullet sim
         self.sim = p.connect(p.DIRECT)
 
-        p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        self.world_plane = p.loadURDF("plane.urdf")
+        # p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        # self.world_plane = p.loadURDF("plane.urdf")
 
         p.setGravity(0,0,-9.8)
 
@@ -91,7 +91,7 @@ class IRB120ENV_simple(gym.Env):
         self.step_counter = 0
 
         p.resetSimulation()
-        self.world_plane = p.loadURDF("plane.urdf")
+        # self.world_plane = p.loadURDF("plane.urdf")
         p.setGravity(0,0,-9.8)
 
         self.arm = Arm()
