@@ -1,3 +1,4 @@
+from urllib.parse import DefragResult
 from numpy.core.fromnumeric import shape
 import gym
 
@@ -98,8 +99,9 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = Arm()
 
-        x = 0
-        y = -.34
+        angle = default_rng().random()*2*2.8 - 2.8
+        x = .34 * np.cos(angle)
+        y = .34 * np.sin(angle)
         z = -.084
         goal_d = [x,y,z]
 
