@@ -33,7 +33,7 @@ class IRB120ENV_simple(gym.Env):
         # p.setAdditionalSearchPath(pybullet_data.getDataPath())
         # self.world_plane = p.loadURDF("plane.urdf")
 
-        p.setGravity(0,0,-9.8)
+        # p.setGravity(0,0,-9.8)
 
         self.arm = None
         self.goal = None
@@ -94,7 +94,7 @@ class IRB120ENV_simple(gym.Env):
 
         p.resetSimulation()
         # self.world_plane = p.loadURDF("plane.urdf")
-        p.setGravity(0,0,-9.8)
+        # p.setGravity(0,0,-9.8)
 
         self.arm = Arm()
 
