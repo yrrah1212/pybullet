@@ -58,11 +58,11 @@ class IRB120ENV_simple(gym.Env):
         error_mag = np.linalg.norm(error)
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
+        # Try statement to avoid issues with dividing by zero
         try:
             reward = np.abs(1/error_mag)
-            reward = min(reward, 1/.001)
         except:
-            pass
+            reward = 1/.0001
         # reward = 50 * max(self.prev_error - error_mag, 0)
 
         # Reward. Difference between previous error and current error if there were no collisions
@@ -84,7 +84,6 @@ class IRB120ENV_simple(gym.Env):
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error_mag <= .001:
-            reward = 10
             self.done = True
 
         # Return the observation, reward, and done state
