@@ -9,7 +9,7 @@ class Arm:
         # f_path = f"{pathlib.Path().resolve()}/irb120.urdf"
         # Path in colab
         f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"
-        self.arm = p.loadURDF(f_path, [0, 0, 0], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
+        self.arm = p.loadURDF(f_path, [0, 0, .25], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
         # start in the zero angle config
         self.reset([0,0,0,0,0,0])
 
