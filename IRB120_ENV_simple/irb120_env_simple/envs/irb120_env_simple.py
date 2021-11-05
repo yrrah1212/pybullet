@@ -98,7 +98,7 @@ class IRB120ENV_simple(gym.Env):
 
         x = 0
         y = -.34
-        z = -.084 + .25
+        z = -.084
         goal_d = [x,y,z]
 
         self.goal = goal_d
