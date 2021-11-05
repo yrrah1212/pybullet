@@ -114,10 +114,8 @@ class IRB120ENV_simple(gym.Env):
         self.goal = goal_d
 
         # Add goal position to the sim. Sphere with radius=.1
-        goal_collision = p.createCollisionShape(p.GEOM_SPHERE, .05)
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
-        p.createMultiBody(baseCollisionShapeIndex=goal_collision, 
-                            baseVisualShapeIndex=goal_visual,
+        p.createMultiBody(  baseVisualShapeIndex=goal_visual,
                             basePosition=goal_d)
 
         # Get observation for the current arm state
