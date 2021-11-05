@@ -101,7 +101,8 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = Arm()
 
-        angle = default_rng().random()*2*2.8 - 2.8
+        # angle = default_rng().random()*2*2.8 - 2.8
+        angle = 1
         x = .34 * np.cos(angle)
         y = .34 * np.sin(angle)
         z = -.084
