@@ -37,7 +37,7 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = None
         self.goal = None
-        self.done = None
+        self.done = False
         self.prev_error = None
         self.step_counter = 0
 
