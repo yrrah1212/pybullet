@@ -59,10 +59,10 @@ class IRB120ENV_simple(gym.Env):
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
         if len(collisions) > 0:
-            reward = -100
+            reward = -50
             self.done = True
         else:
-            reward = max(self.prev_error - error_mag, 0)
+            reward = 50 * max(self.prev_error - error_mag, 0)
 
         # Update previous error
         self.prev_error = error_mag
