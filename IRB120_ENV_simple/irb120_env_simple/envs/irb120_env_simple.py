@@ -86,7 +86,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Return the observation, reward, and done state
 
-        return np.array(self.goal), reward, self.done, dict()
+        return np.array(self.goal), -1*reward, self.done, dict()
         # return np.array(error), reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
