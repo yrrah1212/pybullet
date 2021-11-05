@@ -31,16 +31,14 @@ class IRB120ENV_simple(gym.Env):
         # Connect to the pybullet sim
         self.sim = p.connect(p.DIRECT)
 
-        # p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        # self.world_plane = p.loadURDF("plane.urdf")
-
-        # p.setGravity(0,0,-9.8)
-
         self.arm = None
         self.goal = None
         self.done = False
         self.prev_error = None
         self.step_counter = 0
+
+        # Max number of steps per iteration
+        self.max_steps = 200
 
         self.reset()
 
@@ -78,7 +76,7 @@ class IRB120ENV_simple(gym.Env):
         self.step_counter += 1
 
         # If the step counter goes over this many steps then stop
-        if self.step_counter > 1000:
+        if self.step_counter > self.max_steps:
             self.done = True
 
         # Check if the process is done
@@ -99,8 +97,6 @@ class IRB120ENV_simple(gym.Env):
         self.step_counter = 0
 
         p.resetSimulation()
-        # self.world_plane = p.loadURDF("plane.urdf")
-        # p.setGravity(0,0,-9.8)
 
         self.arm = Arm()
 
