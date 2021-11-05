@@ -91,7 +91,6 @@ class IRB120ENV_simple(gym.Env):
         # return arm_state, reward, self.done, dict()
 
 
-
     def reset(self):
         self.done = False
         self.step_counter = 0
