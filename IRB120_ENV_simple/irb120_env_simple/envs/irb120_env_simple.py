@@ -45,7 +45,6 @@ class IRB120ENV_simple(gym.Env):
 
 
     def step(self, action):
-        done_cause = ""
         # Apply the action to the arm and step simulation
         self.arm.apply_action(action)
         p.stepSimulation()
@@ -62,7 +61,6 @@ class IRB120ENV_simple(gym.Env):
         if len(collisions) > 0:
             reward = -100
             self.done = True
-            done_cause = "Finished due to collision"
         else:
             reward = max(self.prev_error - error_mag, 0)
 
@@ -74,20 +72,18 @@ class IRB120ENV_simple(gym.Env):
 
         # If the step counter goes over this many steps then stop
         if self.step_counter > 100:
-            # self.done = True
-            done_cause = "Finished due to step counter"
+            self.done = True
 
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error_mag < .001:
             reward = 100
-            # self.done = True
-            done_cause = "Finished due to reaching final position"
+            self.done = True
 
         # Return the observation, reward, and done state
 
         # Changed the state to be the error so the state is relative to the goal
-        return np.array(error), reward, self.done, {"Done Condition":done_cause}
+        return np.array(error), reward, self.done, dict()
 
 
     def reset(self):
