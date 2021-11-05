@@ -135,8 +135,8 @@ class IRB120ENV_simple(gym.Env):
 
         # Parameters for the rendered image
         fov = 60
-        img_width = 1280
-        img_height = 960
+        img_width = 640
+        img_height = 480
         aspect = img_width / img_height
 
         # View and projection matrices from pybullet
