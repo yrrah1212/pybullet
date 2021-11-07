@@ -80,14 +80,11 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
 
         # Check if the process is done
-        # TODO determine if this reward is appropriate for solving the problem
         if error_mag <= .001:
             self.done = True
 
-        # Return the observation, reward, and done state
-
-        return np.array(self.goal), reward, self.done, dict()
-        # return np.array(error), reward, self.done, dict()
+        # return np.array(self.goal), reward, self.done, dict()
+        return np.array(error), reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -122,8 +119,8 @@ class IRB120ENV_simple(gym.Env):
         self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
-        return np.array(self.goal)
-        # return np.array(error)
+        # return np.array(self.goal)
+        return np.array(error)
         # return arm_state
 
 
