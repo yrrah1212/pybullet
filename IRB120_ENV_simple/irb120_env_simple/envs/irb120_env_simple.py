@@ -34,7 +34,6 @@ class IRB120ENV_simple(gym.Env):
         self.arm = None
         self.goal = None
         self.done = False
-        self.prev_error = None
         self.step_counter = 0
 
         # Max number of steps per iteration
@@ -61,16 +60,12 @@ class IRB120ENV_simple(gym.Env):
             reward = np.abs(1/error_mag)
         except:
             reward = 1/.0001
-        # reward = 50 * max(self.prev_error - error_mag, 0)
 
         # Reward. Difference between previous error and current error if there were no collisions
         collisions = p.getContactPoints()
         if len(collisions) > 0:
             reward = -1
             self.done = True           
-
-        # Update previous error
-        self.prev_error = error_mag
 
         # Increase the step counter
         self.step_counter += 1
@@ -118,7 +113,6 @@ class IRB120ENV_simple(gym.Env):
         # Set the first prev_error based on the starting error
         error = np.subtract(self.goal, arm_state)
         error_mag = np.linalg.norm(error)
-        self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
@@ -127,6 +121,9 @@ class IRB120ENV_simple(gym.Env):
 
 
     def render(self, mode=None, args=None):
+        # Move the arm to the set position
+        self.arm.reset()
+
         # Location of the target (the base of the arm)
         cam_pos = [1,-1,1.5]
         target_pos = [0,0,.25]

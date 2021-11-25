@@ -11,20 +11,23 @@ class Arm:
         f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"
         self.arm = p.loadURDF(f_path, [0, 0, 0], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
         # start in the zero angle config
+        self.joint_val = 0
         self.reset([0,0,0,0,0,0])
 
-    def reset(self, th_list):
-        th_list[1] += np.pi/2
+    def reset(self):
+        th_list = [self.joint_val, np.pi/2, 0, 0, 0, 0]
         for i in range(6):
             p.resetJointState(self.arm, i, th_list[i])
 
     def apply_action(self, th0):
-        p.resetJointState(self.arm, 0, th0)
+        # p.resetJointState(self.arm, 0, th0)
+        self.joint_val = th0
 
     def get_observations(self):
-        joint = p.getJointState(self.arm, 0)[0]
+        # joint = p.getJointState(self.arm, 0)[0]
 
-        return [joint, 0, 0]
+        # return [joint, 0, 0]
+        return [self.joint_val, 0, 0]
 
 
 def rotX(theta: float):
@@ -108,5 +111,3 @@ def dh_fwdK(th_list: list):
         H = H @ dhTransform(dh[i][0], dh[i][1], dh[i][2], th_list[i] - dh[i][3])
         
     return H
-
-        
