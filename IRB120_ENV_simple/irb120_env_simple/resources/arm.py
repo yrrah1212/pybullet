@@ -23,7 +23,7 @@ class Arm:
         self.joint_val = th0
 
     def get_observations(self):
-        return [self.joint_val, 0, 0]
+        return [-1*self.joint_val-1, 0, 0]
 
 
 def rotX(theta: float):
