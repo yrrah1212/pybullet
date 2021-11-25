@@ -21,7 +21,6 @@ class IRB120ENV_simple(gym.Env):
         )
 
         self.observation_space = gym.spaces.box.Box(
-            # Position of end effector. x, y, z
             low=np.array([-2.87979, -1, -1]),
             high=np.array([2.87979, 1, 1])
         )
@@ -53,6 +52,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Calculate the new error. L2 distance between goal vectors
         error = np.subtract(self.goal, arm_state)
+        error = list(error)
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
@@ -80,7 +80,7 @@ class IRB120ENV_simple(gym.Env):
 
         # return np.array(self.goal), reward, self.done, dict()
         # return np.array(error), reward, self.done, dict()
-        return np.array([error]), reward, self.done, dict()
+        return error, reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -112,10 +112,11 @@ class IRB120ENV_simple(gym.Env):
 
         # Set the first prev_error based on the starting error
         error = np.subtract(self.goal, arm_state)
+        error = list(error)
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
-        return np.array([error])
+        return error
         # return arm_state
 
 
