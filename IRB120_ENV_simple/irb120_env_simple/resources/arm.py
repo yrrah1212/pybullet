@@ -22,7 +22,7 @@ class Arm:
         p.resetJointState(self.arm, 0, th0)
 
     def get_observations(self):
-        joint = p.getJointState(self.arm, 0)[1]
+        joint = p.getJointState(self.arm, 0)[0]
 
         return [joint, 0, 0]
 
