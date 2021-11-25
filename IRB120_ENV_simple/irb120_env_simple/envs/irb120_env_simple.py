@@ -21,8 +21,8 @@ class IRB120ENV_simple(gym.Env):
         )
 
         self.observation_space = gym.spaces.box.Box(
-            low=np.array([-2.87979, -1, -1]),
-            high=np.array([2.87979, 1, 1])
+            low=np.array([-2.87979]),
+            high=np.array([2.87979])
         )
         
         self.seed()
@@ -48,7 +48,7 @@ class IRB120ENV_simple(gym.Env):
         
         # Get observation about the arm now
         arm_state = self.arm.get_observations()
-        arm_state[0] = arm_state[0]*-1 - 1
+        arm_state = arm_state*-1 - 1
 
         # Calculate the new error. L2 distance between goal vectors
         error = np.subtract(self.goal, arm_state)
@@ -100,7 +100,7 @@ class IRB120ENV_simple(gym.Env):
         goal_d = [x,y,z]
 
         # self.goal = goal_d
-        self.goal = [angle, 0, 0]
+        self.goal = angle
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
