@@ -21,8 +21,8 @@ class IRB120ENV_simple(gym.Env):
         )
 
         self.observation_space = gym.spaces.box.Box(
-            low=np.array([-2.87979]),
-            high=np.array([2.87979])
+            low=-2.87979,
+            high=2.87979
         )
         
         self.seed()
@@ -77,10 +77,7 @@ class IRB120ENV_simple(gym.Env):
         if np.abs(error) <= .001:
             self.done = True
 
-        # return np.array(self.goal), reward, self.done, dict()
-        # return np.array(error), reward, self.done, dict()
-        return np.array([error]), reward, self.done, dict()
-        # return arm_state, reward, self.done, dict()
+        return error, reward, self.done, dict()
 
 
     def reset(self):
@@ -113,9 +110,7 @@ class IRB120ENV_simple(gym.Env):
         error = self.goal - arm_state
 
         # returns error as the current state so the state is based on the goal
-        # return np.array(self.goal)
-        return np.array([error])
-        # return arm_state
+        return error
 
 
     def render(self, mode=None, args=None):
