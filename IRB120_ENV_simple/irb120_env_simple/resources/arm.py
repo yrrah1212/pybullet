@@ -27,6 +27,8 @@ class Arm:
         # joint = p.getJointState(self.arm, 0)[0]
 
         # return [joint, 0, 0]
+
+        # For some reason observation = -1*observation - 1
         return [-1*self.joint_val-1, 0, 0]
 
 
