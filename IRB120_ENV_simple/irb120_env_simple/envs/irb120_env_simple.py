@@ -49,7 +49,6 @@ class IRB120ENV_simple(gym.Env):
         
         # Get observation about the arm now
         arm_state = self.arm.get_observations()
-        arm_state[0] = (arm_state[0]+1) * -1
 
         # Calculate the new error. L2 distance between goal vectors
         error = np.subtract(self.goal, arm_state)
