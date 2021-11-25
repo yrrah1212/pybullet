@@ -27,7 +27,7 @@ class Arm:
         # joint = p.getJointState(self.arm, 0)[0]
 
         # return [joint, 0, 0]
-        return [-1*self.joint_val+3, 0, 0]
+        return [-1*self.joint_val-1, 0, 0]
 
 
 def rotX(theta: float):
