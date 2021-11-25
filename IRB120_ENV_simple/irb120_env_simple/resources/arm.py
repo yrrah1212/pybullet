@@ -20,16 +20,10 @@ class Arm:
             p.resetJointState(self.arm, i, th_list[i])
 
     def apply_action(self, th0):
-        # p.resetJointState(self.arm, 0, th0)
         self.joint_val = th0
 
     def get_observations(self):
-        # joint = p.getJointState(self.arm, 0)[0]
-
-        # return [joint, 0, 0]
-
-        # For some reason observation = -1*observation - 1
-        return [-1*self.joint_val-1, 0, 0]
+        return [self.joint_val, 0, 0]
 
 
 def rotX(theta: float):

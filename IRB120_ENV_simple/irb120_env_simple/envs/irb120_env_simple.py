@@ -49,6 +49,7 @@ class IRB120ENV_simple(gym.Env):
         
         # Get observation about the arm now
         arm_state = self.arm.get_observations()
+        arm_state[0] = arm_state[0]*-1 - 1
 
         # Calculate the new error. L2 distance between goal vectors
         error = np.subtract(self.goal, arm_state)
@@ -61,10 +62,10 @@ class IRB120ENV_simple(gym.Env):
             reward = 1/.0001
 
         # Reward. Difference between previous error and current error if there were no collisions
-        collisions = p.getContactPoints()
-        if len(collisions) > 0:
-            reward = -1
-            self.done = True           
+        # collisions = p.getContactPoints()
+        # if len(collisions) > 0:
+        #     reward = -1
+        #     self.done = True           
 
         # Increase the step counter
         self.step_counter += 1
@@ -79,7 +80,7 @@ class IRB120ENV_simple(gym.Env):
 
         # return np.array(self.goal), reward, self.done, dict()
         # return np.array(error), reward, self.done, dict()
-        return np.transpose(error), reward, self.done, dict()
+        return error, reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -114,7 +115,7 @@ class IRB120ENV_simple(gym.Env):
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
-        return np.transpose(error)
+        return error
         # return arm_state
 
 
