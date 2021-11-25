@@ -105,7 +105,7 @@ class IRB120ENV_simple(gym.Env):
         goal_d = [x,y,z]
 
         # self.goal = goal_d
-        self.goal = angle
+        self.goal = [angle, 0, 0]
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
