@@ -74,7 +74,7 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
 
         # Check if the process is done
-        if error[0] <= .001:
+        if np.abs(error) <= .001:
             self.done = True
 
         # return np.array(self.goal), reward, self.done, dict()
