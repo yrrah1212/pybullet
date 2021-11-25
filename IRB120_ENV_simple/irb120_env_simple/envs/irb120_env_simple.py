@@ -22,8 +22,8 @@ class IRB120ENV_simple(gym.Env):
 
         self.observation_space = gym.spaces.box.Box(
             # Position of end effector. x, y, z
-            low=np.array([-5, -5, -5]),
-            high=np.array([5, 5, 5])
+            low=np.array([-2.87979, -1, -1]),
+            high=np.array([2.87979, 1, 1])
         )
         
         self.seed()
@@ -79,7 +79,7 @@ class IRB120ENV_simple(gym.Env):
 
         # return np.array(self.goal), reward, self.done, dict()
         # return np.array(error), reward, self.done, dict()
-        return error, reward, self.done, dict()
+        return np.transpose(error), reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -114,7 +114,7 @@ class IRB120ENV_simple(gym.Env):
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
-        return error
+        return np.transpose(error)
         # return arm_state
 
 
