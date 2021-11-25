@@ -116,7 +116,7 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = np.subtract(self.goal - arm_state)
+        error = np.subtract(self.goal, arm_state)
         error_mag = np.linalg.norm(error)
         self.prev_error = error_mag
 
