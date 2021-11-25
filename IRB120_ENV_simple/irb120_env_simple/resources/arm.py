@@ -12,7 +12,7 @@ class Arm:
         self.arm = p.loadURDF(f_path, [0, 0, 0], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
         # start in the zero angle config
         self.joint_val = 0
-        self.reset([0,0,0,0,0,0])
+        self.reset()
 
     def reset(self):
         th_list = [self.joint_val, np.pi/2, 0, 0, 0, 0]
