@@ -80,7 +80,7 @@ class IRB120ENV_simple(gym.Env):
 
         # return np.array(self.goal), reward, self.done, dict()
         # return np.array(error), reward, self.done, dict()
-        return error, reward, self.done, dict()
+        return np.array(error), reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -115,7 +115,7 @@ class IRB120ENV_simple(gym.Env):
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
-        return error
+        return np.array(error)
         # return arm_state
 
 
