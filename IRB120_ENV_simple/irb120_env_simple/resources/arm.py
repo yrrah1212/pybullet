@@ -30,7 +30,7 @@ class Arm:
         d = np.transpose(H[0:3, 3])
 
         # return d
-        return all_joints[0]
+        return [all_joints[0], 0, 0]
 
 
 def rotX(theta: float):

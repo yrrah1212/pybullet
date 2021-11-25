@@ -22,8 +22,8 @@ class IRB120ENV_simple(gym.Env):
 
         self.observation_space = gym.spaces.box.Box(
             # Position of end effector. x, y, z
-            low=np.array([-5]),
-            high=np.array([5])
+            low=np.array([-5, -5, -5]),
+            high=np.array([5, 5, 5])
         )
         
         self.seed()
@@ -117,8 +117,8 @@ class IRB120ENV_simple(gym.Env):
 
         # Set the first prev_error based on the starting error
         error = self.goal - arm_state
-        # error_mag = np.linalg.norm(error)
-        # self.prev_error = error_mag
+        error_mag = np.linalg.norm(error)
+        self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
