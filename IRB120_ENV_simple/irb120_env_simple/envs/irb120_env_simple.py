@@ -84,7 +84,8 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
 
         # return np.array(self.goal), reward, self.done, dict()
-        return np.array(error), reward, self.done, dict()
+        # return np.array(error), reward, self.done, dict()
+        return error, reward, self.done, dict()
         # return arm_state, reward, self.done, dict()
 
 
@@ -103,7 +104,8 @@ class IRB120ENV_simple(gym.Env):
         z = -.084
         goal_d = [x,y,z]
 
-        self.goal = goal_d
+        # self.goal = goal_d
+        self.goal = angle
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
@@ -115,13 +117,14 @@ class IRB120ENV_simple(gym.Env):
 
         # Set the first prev_error based on the starting error
         error = self.goal - arm_state
-        error_mag = np.linalg.norm(error)
-        self.prev_error = error_mag
+        # error_mag = np.linalg.norm(error)
+        # self.prev_error = error_mag
 
         # returns error as the current state so the state is based on the goal
         # return np.array(self.goal)
-        return np.array(error)
+        # return np.array(error)
         # return arm_state
+        return error
 
 
     def render(self, mode=None, args=None):

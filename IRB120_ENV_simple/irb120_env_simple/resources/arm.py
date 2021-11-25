@@ -18,8 +18,8 @@ class Arm:
         for i in range(6):
             p.resetJointState(self.arm, i, th_list[i])
 
-    def apply_action(self, th1):
-        p.resetJointState(self.arm, 0, th1)
+    def apply_action(self, th0):
+        p.resetJointState(self.arm, 0, th0)
 
     def get_observations(self):
         all_joints = [i[0] for i in p.getJointStates(self.arm, range(6))]
@@ -29,7 +29,8 @@ class Arm:
 
         d = np.transpose(H[0:3, 3])
 
-        return d
+        # return d
+        return all_joints[0]
 
 
 def rotX(theta: float):
