@@ -45,7 +45,7 @@ class IRB120ENV_simple(gym.Env):
     def step(self, action):
         # Apply the action to the arm and step simulation
         self.arm.apply_action(action)
-        p.stepSimulation()
+        # p.stepSimulation()
         
         # Get observation about the arm now
         arm_state = self.arm.get_observations()
@@ -123,6 +123,7 @@ class IRB120ENV_simple(gym.Env):
     def render(self, mode=None, args=None):
         # Move the arm to the set position
         self.arm.reset()
+        p.stepSimulation()
 
         # Location of the target (the base of the arm)
         cam_pos = [1,-1,1.5]
