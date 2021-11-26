@@ -53,16 +53,17 @@ class IRB120ENV(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(7)]))
+        error_vec = np.subtract(self.goal, arm_state)
+        error = np.linalg.norm(error_vec, 2)
 
-        # Reward. Difference between previous error and current error if there were no collisions
-        collisions = p.getContactPoints()
-        if len(collisions) > 0:
-            reward = -100
+        # Reward: inverse of the error squared + 100 or 0 depending on if the arm moved towards the goal
+        # collisions = p.getContactPoints()
+        # if len(collisions) > 0:
+        #     reward = -1000
             # self.done = True
         # else:
         #     reward = max(self.prev_error - error, 0)
-        reward = 1 / abs(error)**2
+        reward = (1 / abs(error))  + 100*(np.abs(self.prev_error) < np.abs(error))
 
         # Update previous error
         self.prev_error = error
@@ -83,7 +84,7 @@ class IRB120ENV(gym.Env):
             self.done = True
 
         # Return the observation, reward, and done state
-        return np.subtract(self.goal, arm_state), reward, self.done, dict({'done_cause':done_cause})
+        return error_vec, reward, self.done, dict({'done_cause':done_cause})
 
 
 
@@ -127,10 +128,10 @@ class IRB120ENV(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
-        self.prev_error = error
+        error_vec = np.subtract(self.goal, arm_state)
+        self.prev_error = np.linalg.norm(error_vec, 2)
 
-        return np.subtract(self.goal, arm_state)
+        return error_vec
 
 
     def render(self, mode=None, args=None):
