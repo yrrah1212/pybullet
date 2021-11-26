@@ -56,10 +56,10 @@ class IRB120ENV(gym.Env):
         error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(7)]))
 
         # Reward. Difference between previous error and current error if there were no collisions
-        # collisions = p.getContactPoints()
-        # if len(collisions) > 0:
-        #     reward = -100
-        #     self.done = True
+        collisions = p.getContactPoints()
+        if len(collisions) > 0:
+            reward = -100
+            self.done = True
         # else:
         #     reward = max(self.prev_error - error, 0)
         reward = 1 / abs(error)**2
@@ -71,7 +71,7 @@ class IRB120ENV(gym.Env):
         self.step_counter += 1
 
         # If the step counter goes over this many steps then stop
-        if self.step_counter > 5000:
+        if self.step_counter > 500:
             done_cause = 'step_counter '
             self.done = True
 
@@ -83,8 +83,7 @@ class IRB120ENV(gym.Env):
             self.done = True
 
         # Return the observation, reward, and done state
-        # return np.subtract(self.goal, arm_state), reward, self.done, dict({'done_cause':done_cause})
-        return self.goal, reward, self.done, dict({'done_cause':done_cause})
+        return np.subtract(self.goal, arm_state), reward, self.done, dict({'done_cause':done_cause})
 
 
 
@@ -131,8 +130,7 @@ class IRB120ENV(gym.Env):
         error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
         self.prev_error = error
 
-        # return np.subtract(self.goal, arm_state)
-        return self.goal
+        return np.subtract(self.goal, arm_state)
 
 
     def render(self, mode=None, args=None):
