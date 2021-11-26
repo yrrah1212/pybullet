@@ -55,12 +55,13 @@ class IRB120ENV(gym.Env):
         error = np.sqrt(np.sum([(self.goal[i] - arm_state[i])**2 for i in range(7)]))
 
         # Reward. Difference between previous error and current error if there were no collisions
-        collisions = p.getContactPoints()
-        if len(collisions) > 0:
-            reward = -100
-            self.done = True
-        else:
-            reward = max(self.prev_error - error, 0)
+        # collisions = p.getContactPoints()
+        # if len(collisions) > 0:
+        #     reward = -100
+        #     self.done = True
+        # else:
+        #     reward = max(self.prev_error - error, 0)
+        reward = 1 / abs(error)
 
         # Update previous error
         self.prev_error = error
@@ -69,7 +70,7 @@ class IRB120ENV(gym.Env):
         self.step_counter += 1
 
         # If the step counter goes over this many steps then stop
-        if self.step_counter > 100:
+        if self.step_counter > 200:
             self.done = True
 
         # Check if the process is done
