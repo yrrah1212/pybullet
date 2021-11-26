@@ -71,7 +71,7 @@ class IRB120ENV(gym.Env):
         self.step_counter += 1
 
         # If the step counter goes over this many steps then stop
-        if self.step_counter > 200:
+        if self.step_counter > 500:
             done_cause = 'step_counter '
             self.done = True
 
