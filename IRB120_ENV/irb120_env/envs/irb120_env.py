@@ -43,6 +43,7 @@ class IRB120ENV(gym.Env):
 
 
     def step(self, action):
+        done_cause = ''
 
         # Apply the action to the arm and step simulation
         self.arm.apply_action(action)
@@ -71,16 +72,18 @@ class IRB120ENV(gym.Env):
 
         # If the step counter goes over this many steps then stop
         if self.step_counter > 200:
+            done_cause = 'step_counter '
             self.done = True
 
         # Check if the process is done
         # TODO determine if this reward is appropriate for solving the problem
         if error < .001:
+            done_cause += 'error'
             reward = 100
             self.done = True
 
         # Return the observation, reward, and done state
-        return arm_state, reward, self.done, dict()
+        return arm_state, reward, self.done, dict({'done_cause':done_cause})
 
 
     def reset(self):
