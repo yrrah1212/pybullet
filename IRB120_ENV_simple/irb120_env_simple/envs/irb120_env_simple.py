@@ -33,6 +33,7 @@ class IRB120ENV_simple(gym.Env):
         self.arm = None
         self.goal = None
         self.done = False
+        self.prev_error = 0
         self.step_counter = 0
 
         # Max number of steps per iteration
@@ -55,9 +56,11 @@ class IRB120ENV_simple(gym.Env):
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
         try:
-            reward = np.abs(1/error)
+            reward = np.abs(1/error) + 10 * (np.abs(error) < np.abs(self.prev_error))
         except:
             reward = 1/.0001
+
+        self.prev_error = error
 
         # Reward. Difference between previous error and current error if there were no collisions
         # collisions = p.getContactPoints()
@@ -107,6 +110,8 @@ class IRB120ENV_simple(gym.Env):
 
         # Set the first prev_error based on the starting error
         error = self.goal - arm_state
+
+        self.prev_error = error
 
         # returns error as the current state so the state is based on the goal
         return error
