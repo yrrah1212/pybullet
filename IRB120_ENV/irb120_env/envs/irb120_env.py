@@ -59,7 +59,7 @@ class IRB120ENV(gym.Env):
         collisions = p.getContactPoints()
         if len(collisions) > 0:
             reward = -100
-            self.done = True
+            # self.done = True
         # else:
         #     reward = max(self.prev_error - error, 0)
         reward = 1 / abs(error)**2
