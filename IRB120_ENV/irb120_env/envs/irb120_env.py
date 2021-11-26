@@ -62,7 +62,7 @@ class IRB120ENV(gym.Env):
         #     self.done = True
         # else:
         #     reward = max(self.prev_error - error, 0)
-        reward = 1 / abs(error)
+        reward = 1 / abs(error)**2
 
         # Update previous error
         self.prev_error = error
