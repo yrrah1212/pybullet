@@ -83,7 +83,7 @@ class IRB120ENV(gym.Env):
             self.done = True
 
         # Return the observation, reward, and done state
-        return np.subtract(self.goal - arm_state), reward, self.done, dict({'done_cause':done_cause})
+        return np.subtract(self.goal, arm_state), reward, self.done, dict({'done_cause':done_cause})
 
 
     def reset(self):
@@ -129,8 +129,7 @@ class IRB120ENV(gym.Env):
         error = np.sqrt(np.sum([(arm_state[i] - self.goal[i])**2 for i in range(7)]))
         self.prev_error = error
 
-        # TODO the example returns the state and the goal
-        return np.subtract(self.goal - arm_state)
+        return np.subtract(self.goal, arm_state)
 
 
     def render(self, mode=None, args=None):
