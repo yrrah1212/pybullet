@@ -57,7 +57,7 @@ class IRB120ENV_simple(gym.Env):
         # Try statement to avoid issues with dividing by zero
         try:
             # reward = np.abs(1/error) + 10 * (np.abs(error) < np.abs(self.prev_error))
-           reward = 10 * (np.abs(error) < np.abs(self.prev_error))
+           reward = 10 * (np.abs(error) - np.abs(self.prev_error))
         except:
             reward = 1/.0001
 
