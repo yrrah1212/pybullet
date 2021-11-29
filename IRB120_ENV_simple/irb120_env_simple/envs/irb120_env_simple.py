@@ -9,6 +9,7 @@ import pybullet as p
 import pybullet_data
 
 from irb120_env_simple.resources.arm import Arm
+from irb120_env_simple.resources.arm import *
 
 class IRB120ENV_simple(gym.Env):
     metadata = {'render.modes': ['human']}  
@@ -87,7 +88,7 @@ class IRB120ENV_simple(gym.Env):
         th0 = default_rng().random()*2*2.8 - 2.8
         th1 = default_rng().random()*1.91986 - 1.91986
 
-        T = Arm.dh_fwdK([th0, th1, 0, 0, 0, 0])
+        T = dh_fwdK([th0, th1, 0, 0, 0, 0])
 
         # self.goal = goal_d
         self.goal = np.transpose(T[0:3, 3])
