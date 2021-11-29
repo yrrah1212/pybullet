@@ -79,7 +79,7 @@ class IRB120ENV_simple(gym.Env):
         if np.abs(error) <= .001:
             self.done = True
 
-        return [arm_state, error], reward, self.done, dict()
+        return error, reward, self.done, dict()
 
 
     def reset(self):
@@ -114,7 +114,7 @@ class IRB120ENV_simple(gym.Env):
         self.prev_error = error
 
         # returns error as the current state so the state is based on the goal
-        return [arm_state, error]
+        return error
 
 
     def render(self, mode=None, args=None):
