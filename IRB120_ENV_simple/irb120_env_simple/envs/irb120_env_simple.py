@@ -57,7 +57,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        reward = -1*np.linalg.norm(error)
+        reward = -1*np.linalg.norm(error) + (1 / np.linalg.norm(error))*(abs(error) < np.abs(self.prev_error))
 
         self.prev_error = error         
 
