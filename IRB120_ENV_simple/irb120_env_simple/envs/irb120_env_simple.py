@@ -55,7 +55,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        reward = -1*np.abs(error) + (1/abs(error))*(abs(error) < abs(self.prev_error))
+        reward = -1*np.abs(error) #+ (1/abs(error))*(abs(error) < abs(self.prev_error))
 
         self.prev_error = error         
 
@@ -67,7 +67,7 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
 
         # Check if the process is done
-        if np.abs(error) <= .001:
+        if np.abs(error) <= .1:
             self.done = True
 
         return [arm_state, error], reward, self.done, dict()
