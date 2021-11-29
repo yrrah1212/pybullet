@@ -14,13 +14,13 @@ class Arm:
         self.reset()
 
     def reset(self):
-        th_list = [0, np.pi/2, 0, 0, 0, 0]
+        th_list = [0, 0+np.pi/2, 0, 0, 0, 0]
         for i in range(6):
             p.resetJointState(self.arm, i, th_list[i])
 
     def apply_action(self, th_list):
         p.resetJointState(self.arm, 0, th_list[0])
-        p.resetJointState(self.arm, 1, th_list[1])
+        p.resetJointState(self.arm, 1, th_list[1] + np.pi/2)
 
     def get_observations(self):
         joints = [p.getJointState(self.arm, i)[0] for i in range(6)]
