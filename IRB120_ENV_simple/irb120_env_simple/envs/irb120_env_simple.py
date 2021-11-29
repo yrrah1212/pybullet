@@ -16,8 +16,8 @@ class IRB120ENV_simple(gym.Env):
     def __init__(self):
         self.action_space = gym.spaces.box.Box(
             # Action space for theta 1
-            low=np.array([-2.87979]),
-            high=np.array([2.87979])
+            low=np.array([-2.87979, -1.91986]),
+            high=np.array([2.87979, 1.91986])
         )
 
         self.observation_space = gym.spaces.box.Box(
@@ -84,20 +84,18 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = Arm()
 
-        angle = default_rng().random()*2*2.8 - 2.8
-        # angle = -1
-        x = .34 * np.cos(angle)
-        y = .34 * np.sin(angle)
-        z = -.084
-        goal_d = [x,y,z]
+        th0 = default_rng().random()*2*2.8 - 2.8
+        th1 = default_rng().random()*1.91986 - 1.91986
+
+        T = self.arm.dh_fwdK([th0, th1, 0, 0, 0, 0])
 
         # self.goal = goal_d
-        self.goal = goal_d
+        self.goal = np.transpose(T[0:3, 3])
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
         p.createMultiBody(  baseVisualShapeIndex=goal_visual,
-                            basePosition=goal_d)
+                            basePosition=self.goal)
 
         # Get observation for the current arm state
         arm_state = self.arm.get_observations()
