@@ -57,9 +57,9 @@ class IRB120ENV_simple(gym.Env):
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        reward = -1*np.linalg.norm(error) + (1 / np.linalg.norm(error))*(abs(error) < np.abs(self.prev_error))
+        reward = -1*np.linalg.norm(error) #+ (1 / np.linalg.norm(error))*(abs(error) < np.abs(self.prev_error))
 
-        self.prev_error = error         
+        self.prev_error = np.linalg.norm(error)      
 
         # Increase the step counter
         self.step_counter += 1
@@ -71,6 +71,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Check if the process is done
         if np.linalg.norm(error) <= .1:
+            reward /= 2
             self.done = True
             termination = 'min error'
 
@@ -104,7 +105,7 @@ class IRB120ENV_simple(gym.Env):
         # Set the first prev_error based on the starting error
         error = np.subtract(self.goal, arm_state)
 
-        self.prev_error = error
+        self.prev_error = np.linalg.norm(error)
 
         # returns error as the current state so the state is based on the goal
         return np.concatenate((arm_state, error))
