@@ -73,7 +73,7 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
             termination = 'min error'
 
-        return [arm_state, error], reward, self.done, dict({'termination':termination})
+        return np.concatenate((arm_state, error)), reward, self.done, dict({'termination':termination})
 
 
     def reset(self):
@@ -108,7 +108,7 @@ class IRB120ENV_simple(gym.Env):
         self.prev_error = error
 
         # returns error as the current state so the state is based on the goal
-        return [arm_state, error]
+        return np.concatenate((arm_state, error))
 
 
     def render(self, mode=None, args=None):
