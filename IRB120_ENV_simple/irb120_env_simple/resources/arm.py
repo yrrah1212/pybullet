@@ -23,7 +23,7 @@ class Arm:
         p.resetJointState(self.arm, 0, th0)
 
     def get_observations(self):
-        return p.getJointStates(self.arm, 0)[0]
+        return p.getJointState(self.arm, 0)[0]
 
 
 def rotX(theta: float):
