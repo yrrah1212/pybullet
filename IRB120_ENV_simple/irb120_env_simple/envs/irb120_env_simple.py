@@ -55,10 +55,8 @@ class IRB120ENV_simple(gym.Env):
         # Calculate the new error. L2 distance between goal vectors
         error = np.subtract(self.goal, arm_state)
 
-        # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
-        # Try statement to avoid issues with dividing by zero
         error_mag = np.linalg.norm(error)
-        reward = 1/error_mag + (1 / error_mag)*(abs(error_mag) < np.abs(self.prev_error))
+        reward = -1*error_mag
 
         self.prev_error = error_mag   
 
@@ -72,7 +70,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Check if the process is done
         if np.linalg.norm(error) <= .1:
-            reward = 30
+            reward = -.1
             self.done = True
             termination = 'min error'
 
