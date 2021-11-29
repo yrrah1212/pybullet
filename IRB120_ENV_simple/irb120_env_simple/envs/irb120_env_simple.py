@@ -52,11 +52,11 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Calculate the new error. L2 distance between goal vectors
-        error = self.goal - arm_state
+        error = np.subtract(self.goal, arm_state)
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        reward = -1*np.abs(error) #+ (1/abs(error))*(abs(error) < abs(self.prev_error))
+        reward = -1*np.linalg.norm(error)
 
         self.prev_error = error         
 
@@ -92,7 +92,7 @@ class IRB120ENV_simple(gym.Env):
         goal_d = [x,y,z]
 
         # self.goal = goal_d
-        self.goal = angle
+        self.goal = goal_d
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
@@ -103,7 +103,7 @@ class IRB120ENV_simple(gym.Env):
         arm_state = self.arm.get_observations()
 
         # Set the first prev_error based on the starting error
-        error = self.goal - arm_state
+        error = np.subtract(self.goal, arm_state)
 
         self.prev_error = error
 

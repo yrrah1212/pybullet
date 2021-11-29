@@ -22,7 +22,11 @@ class Arm:
         p.resetJointState(self.arm, 0, th0)
 
     def get_observations(self):
-        return p.getJointState(self.arm, 0)[0]
+        joints = [p.getJointState(self.arm, i)[0] for i in range(6)]
+        
+        T = dh_fwdK(joints)
+
+        return np.transpose(T[0:3, 3])
 
 
 def rotX(theta: float):
