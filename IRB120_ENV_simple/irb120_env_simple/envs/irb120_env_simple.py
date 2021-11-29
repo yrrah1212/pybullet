@@ -37,7 +37,7 @@ class IRB120ENV_simple(gym.Env):
         self.step_counter = 0
 
         # Max number of steps per iteration
-        self.max_steps = 500
+        self.max_steps = 50
 
         self.reset()
 
