@@ -43,6 +43,7 @@ class IRB120ENV_simple(gym.Env):
 
 
     def step(self, action):
+        termination = ''
         # Apply the action to the arm and step simulation
         self.arm.apply_action(action)
         # p.stepSimulation()
@@ -64,13 +65,15 @@ class IRB120ENV_simple(gym.Env):
 
         # If the step counter goes over this many steps then stop
         if self.step_counter > self.max_steps:
+            termination = 'step counter'
             self.done = True
 
         # Check if the process is done
         if np.abs(error) <= .1:
             self.done = True
+            termination = 'min error'
 
-        return [arm_state, error], reward, self.done, dict()
+        return [arm_state, error], reward, self.done, dict({'termination':termination})
 
 
     def reset(self):
