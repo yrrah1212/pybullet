@@ -37,7 +37,7 @@ class IRB120ENV_simple(gym.Env):
         self.step_counter = 0
 
         # Max number of steps per iteration
-        self.max_steps = 200
+        self.max_steps = 500
 
         self.reset()
 
@@ -55,10 +55,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        try:
-            reward = np.abs(1/error) #+ 10 * (np.abs(error) < np.abs(self.prev_error))
-        except:
-            reward = 1/.0001
+        reward = -1*error**2
 
         self.prev_error = error
 
