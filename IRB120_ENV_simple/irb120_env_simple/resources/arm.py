@@ -11,11 +11,10 @@ class Arm:
         f_path = "/content/pybullet/IRB120_ENV/irb120_env/resources/irb120.urdf"
         self.arm = p.loadURDF(f_path, [0, 0, 0], startOrientation, useFixedBase=1, flags=p.URDF_USE_SELF_COLLISION)
         # start in the zero angle config
-        self.joint_val = 0
         self.reset()
 
     def reset(self):
-        th_list = [self.joint_val, np.pi/2, 0, 0, 0, 0]
+        th_list = [0, np.pi/2, 0, 0, 0, 0]
         for i in range(6):
             p.resetJointState(self.arm, i, th_list[i])
 
