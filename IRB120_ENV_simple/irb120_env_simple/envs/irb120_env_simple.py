@@ -21,8 +21,8 @@ class IRB120ENV_simple(gym.Env):
         )
 
         self.observation_space = gym.spaces.box.Box(
-            low=np.array([-2.87979]),
-            high=np.array([2.87979])
+            low=np.array([-2.87979, -5]),
+            high=np.array([2.87979, 5])
         )
         
         self.seed()
@@ -55,7 +55,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Reward is based on how close to the target the arm is, not how much closer it has moved towards the goal
         # Try statement to avoid issues with dividing by zero
-        reward = -1*error
+        reward = -1*np.abs(error)
 
         self.prev_error = error
 
@@ -76,7 +76,7 @@ class IRB120ENV_simple(gym.Env):
         if np.abs(error) <= .001:
             self.done = True
 
-        return error, reward, self.done, dict()
+        return [arm_state, error], reward, self.done, dict()
 
 
     def reset(self):
@@ -111,7 +111,7 @@ class IRB120ENV_simple(gym.Env):
         self.prev_error = error
 
         # returns error as the current state so the state is based on the goal
-        return error
+        return [arm_state, error]
 
 
     def render(self, mode=None, args=None):
