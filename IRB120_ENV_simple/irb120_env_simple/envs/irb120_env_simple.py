@@ -21,8 +21,8 @@ class IRB120ENV_simple(gym.Env):
         )
 
         self.observation_space = gym.spaces.box.Box(
-            low=np.array([-5, -5, -5]),
-            high=np.array([5, 5, -5])
+            low=np.array([-5, -5, -5, -5, -5, -5]),
+            high=np.array([5, 5, 5, 5, 5, 5])
         )
         
         self.seed()
