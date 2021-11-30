@@ -86,7 +86,7 @@ class IRB120ENV_simple(gym.Env):
         self.arm = Arm()
 
         # th0 = default_rng().random()*2*2.8 - 2.8
-        th0 = np.pi / 4
+        th0 = -1*np.pi / 4
         # th1 = default_rng().random()*2*1.91986 - 1.91986
         th1 = -1 * np.pi / 3
 
