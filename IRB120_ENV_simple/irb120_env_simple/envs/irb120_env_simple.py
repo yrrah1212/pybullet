@@ -69,7 +69,7 @@ class IRB120ENV_simple(gym.Env):
             self.done = True
 
         # Check if the process is done
-        if np.linalg.norm(error) <= .05:
+        if np.linalg.norm(error) <= .2:
             reward = 100
             self.done = True
             termination = 'min error'
