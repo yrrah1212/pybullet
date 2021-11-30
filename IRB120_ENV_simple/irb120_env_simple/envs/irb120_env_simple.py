@@ -56,7 +56,7 @@ class IRB120ENV_simple(gym.Env):
         error = np.subtract(self.goal, arm_state)
 
         error_mag = np.linalg.norm(error)
-        reward = -1*error_mag
+        reward = -1*error_mag**2
 
         self.prev_error = error_mag   
 
@@ -70,7 +70,7 @@ class IRB120ENV_simple(gym.Env):
 
         # Check if the process is done
         if np.linalg.norm(error) <= .1:
-            reward = -.1
+            reward = -.001
             self.done = True
             termination = 'min error'
 
