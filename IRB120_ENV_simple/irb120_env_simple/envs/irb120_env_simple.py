@@ -85,8 +85,10 @@ class IRB120ENV_simple(gym.Env):
 
         self.arm = Arm()
 
-        th0 = default_rng().random()*2*2.8 - 2.8
-        th1 = default_rng().random()*1.91986 - 1.91986
+        # th0 = default_rng().random()*2*2.8 - 2.8
+        th0 = np.pi / 4
+        # th1 = default_rng().random()*2*1.91986 - 1.91986
+        th1 = -1 * np.p / 3
 
         T = dh_fwdK([th0, th1, 0, 0, 0, 0])
 
