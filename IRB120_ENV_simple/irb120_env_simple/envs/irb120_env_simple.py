@@ -58,7 +58,7 @@ class IRB120ENV_simple(gym.Env):
         error_mag = np.linalg.norm(error)
 
         # Reward based on error and time taken to get to the target
-        reward = -1*error_mag - self.step_counter
+        reward = -1*error_mag - np.sqrt(self.step_counter)
 
         self.prev_error = error_mag   
 
