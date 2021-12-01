@@ -21,6 +21,7 @@ class Arm:
     def apply_action(self, th_list):
         p.resetJointState(self.arm, 0, th_list[0])
         p.resetJointState(self.arm, 1, th_list[1] + np.pi/2)
+        p.stepSimulation()
 
     def get_observations(self):
         joints = [p.getJointState(self.arm, i)[0] for i in range(6)]
