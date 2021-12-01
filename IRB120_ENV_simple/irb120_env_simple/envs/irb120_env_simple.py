@@ -79,7 +79,7 @@ class IRB120ENV_simple(gym.Env):
         return self.goal, reward, self.done, dict({'termination':termination})
 
 
-    def reset(self):
+    def reset(self, goal=None):
         self.done = False
         self.step_counter = 0
 
@@ -96,6 +96,9 @@ class IRB120ENV_simple(gym.Env):
 
         # self.goal = goal_d
         self.goal = np.transpose(T[0:3, 3])
+
+        if goal is not None:
+            self.goal = goal
 
         # Add goal position to the sim. Sphere with radius=.1
         goal_visual = p.createVisualShape(p.GEOM_SPHERE, .05, rgbaColor=[0,1,0,1])
